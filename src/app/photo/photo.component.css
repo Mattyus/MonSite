@@ -40,3 +40,44 @@ a .material-icons{
 .modal-footer a{
 	margin: auto;
 }
+
+.chevron{
+	height: 100%;
+	width : 35px;
+	position: absolute;
+	cursor: pointer;
+	
+}
+
+.chevron i{	
+     position: absolute;
+	top: 50%;
+	
+}
+
+.chevron.right:hover{
+	opacity: .9;
+	color: white !important;
+	background-image: -webkit-linear-gradient(left,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+	background-image: -o-linear-gradient(left,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+	background-image: -webkit-gradient(linear,left top,right top,from(rgba(0,0,0,.0001)),to(rgba(0,0,0,.5)));
+	background-image: linear-gradient(to right,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+}
+
+.chevron.left:hover{
+	opacity: .9;
+	color: white !important;
+	background-image: -webkit-linear-gradient(right,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+	background-image: -o-linear-gradient(right,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+	background-image: -webkit-gradient(linear,right top,right top,from(rgba(0,0,0,.0001)),to(rgba(0,0,0,.5)));
+	background-image: linear-gradient(to left,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+}
+
+.chevron.right, .chevron.right i{
+	right: 0;
+}
+
+.chevron.left, .chevron.left i{
+	left: 0;
+}
+

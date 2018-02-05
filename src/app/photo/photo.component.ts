@@ -42,6 +42,14 @@ export class PhotoComponent implements OnInit {
     this.modalService.open(content);
   }
 
+  goPrecedent() {
+    this.selectedPhoto = this.listAffiche[this.listAffiche.indexOf(this.selectedPhoto) - 1 ];
+  }
+
+   goSuivant() {
+    this.selectedPhoto = this.listAffiche[this.listAffiche.indexOf(this.selectedPhoto) + 1 ];
+   }
+
 }
 
 

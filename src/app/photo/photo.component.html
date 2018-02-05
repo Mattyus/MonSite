@@ -36,7 +36,13 @@
     </button>
   </div>
   <div class="modal-body">
+  	<a *ngIf="listAffiche.indexOf(selectedPhoto) > 0" role="button" class="chevron left" (click)="goPrecedent()">
+    	<i class="material-icons">chevron_left</i>
+    </a>
     <img class="card-img" src="/documents/{{selectedPhoto.nom}}" alt="{{selectedPhoto.nom}}">
+    <a *ngIf="listAffiche.indexOf(selectedPhoto) < (listAffiche.length -1)" role="button" class="chevron right" (click)="goSuivant()">
+    	<i class="material-icons">chevron_right</i>
+    </a>
   </div>
   
   <div class="modal-footer">
