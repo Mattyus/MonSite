@@ -1,15 +1,46 @@
 <div class="container">
-	<div class="row">
-		<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngFor="let tile of list">
-			 <div class="card">
-			    <div class="card-body">
-			      <h5 class="card-title">{{tile.text}}</h5>
-			      <img class="card-img-top" src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Card image cap">
-			      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-			      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-			    </div>
-			  </div>  
-		</div>	
-	</div>
-	<ngb-pagination [(collectionSize)]="collectionSize" [(page)]="page" [(pageSize)]="pageSize" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
+   <div class="row">
+      <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngFor="let photo of listAffiche">
+         <div class="card">
+         	<img class="card-img-top" src="/documents/{{photo.nom}}" alt="{{photo.nom}}" (click)="open(content, photo)">
+         	<div class="card-body">
+         		<p class="card-text">
+	               <span class="card-title">{{photo.titre}}</span>
+	               <a href="/documents/{{photo.nom}}" download>
+	               		<i class="material-icons">cloud_download</i>
+	               </a>  
+               </p>               
+               <p class="card-text">
+                  <span *ngFor="let tag of photo.tags" class="badge badge-pill badge-primary">{{tag}}</span>
+               </p>
+               <p class="card-text text-right">
+                  <small class="text-muted">{{photo.date | date:'dd/MM/yyyy'}}</small>
+               </p>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <ngb-pagination class="col" [(collectionSize)]="collectionSize" [(page)]="page" [(pageSize)]="pageSize" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
+      <select class="custom-select col-2 col-sm-2 col-md-1 col-lg-1 col-xl-1" id="select" (change)="onChangeSelect($event.target.value)">
+         <option *ngFor="let val of pageSizeSelect" value="{{val}}">{{val}}</option>
+      </select>
+   </div>
 </div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{selectedPhoto.titre}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <img class="card-img" src="/documents/{{selectedPhoto.nom}}" alt="{{selectedPhoto.nom}}">
+  </div>
+  
+  <div class="modal-footer">
+  	<a href="/documents/{{selectedPhoto.nom}}" download>Télécharger</a>
+  </div>
+</ng-template>
+

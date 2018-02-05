@@ -1,3 +1,42 @@
+/* CARD */
 .card{
 	margin-bottom: 10px;
+  	-webkit-transition:  box-shadow .2s ease-out;
+     box-shadow: .8px .9px 3px grey;
+}
+
+.card:hover{
+	box-shadow: 1px 8px 20px grey;
+    -webkit-transition:  box-shadow .2s ease-in;
+}
+
+
+.card-title {
+    font-size: 1.5rem;
+}
+
+a .material-icons{
+	vertical-align: bottom;
+	font-size: 2.1rem;
+}
+
+.card-img-top{
+	cursor:pointer;
+}
+
+.badge-pill {
+    margin: 1px;
+}
+
+/* MODAL */
+.modal-body {
+    padding: 0;
+}
+
+.card-img{
+	border-radius: 0;
+}
+
+.modal-footer a{
+	margin: auto;
 }
