@@ -2,14 +2,14 @@
    <div class="row">
       <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngFor="let photo of listAffiche">
          <div class="card">
-         	<img class="card-img-top" src="/documents/{{photo.nom}}" alt="{{photo.nom}}" (click)="open(content, photo)">
-         	<div class="card-body">
-         		<p class="card-text">
-	               <span class="card-title">{{photo.titre}}</span>
-	               <a href="/documents/{{photo.nom}}" download>
-	               		<i class="material-icons">cloud_download</i>
-	               </a>  
-               </p>               
+            <img class="card-img-top" src="/documents/{{photo.nom}}" alt="{{photo.nom}}" (click)="open(content, photo)">
+            <div class="card-body">
+               <p class="card-text">
+                  <span class="card-title">{{photo.titre}}</span>
+                  <a href="/documents/{{photo.nom}}" download>
+                  	<i class="material-icons">cloud_download</i>
+                  </a>  
+               </p>
                <p class="card-text">
                   <span *ngFor="let tag of photo.tags" class="badge badge-pill badge-primary">{{tag}}</span>
                </p>
@@ -20,33 +20,31 @@
          </div>
       </div>
    </div>
-   <div class="row">
-      <ngb-pagination class="col" [(collectionSize)]="collectionSize" [(page)]="page" [(pageSize)]="pageSize" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
+   <div *ngIf="listPhoto.length > pageSize" class="row">
+      <ngb-pagination class="col" [(collectionSize)]="listPhoto.length" [(page)]="page" [(pageSize)]="pageSize" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
       <select class="custom-select col-2 col-sm-2 col-md-1 col-lg-1 col-xl-1" id="select" (change)="onChangeSelect($event.target.value)">
          <option *ngFor="let val of pageSizeSelect" value="{{val}}">{{val}}</option>
       </select>
    </div>
 </div>
-
 <ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <h4 class="modal-title">{{selectedPhoto.titre}}</h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-  	<a *ngIf="listAffiche.indexOf(selectedPhoto) > 0" role="button" class="chevron left" (click)="goPrecedent()">
-    	<i class="material-icons">chevron_left</i>
-    </a>
-    <img class="card-img" src="/documents/{{selectedPhoto.nom}}" alt="{{selectedPhoto.nom}}">
-    <a *ngIf="listAffiche.indexOf(selectedPhoto) < (listAffiche.length -1)" role="button" class="chevron right" (click)="goSuivant()">
-    	<i class="material-icons">chevron_right</i>
-    </a>
-  </div>
-  
-  <div class="modal-footer">
-  	<a href="/documents/{{selectedPhoto.nom}}" download>Télécharger</a>
-  </div>
+   <div class="modal-header">
+      <h4 class="modal-title">{{selectedPhoto.titre}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      	<span aria-hidden="true">&times;</span>
+      </button>
+   </div>
+   <div class="modal-body">
+      <a *ngIf="listPhoto.indexOf(selectedPhoto) > 0" role="button" class="chevron left" (click)="goPrecedent()">
+      	<i class="material-icons">chevron_left</i>
+      </a>
+      <img class="card-img" src="/documents/{{selectedPhoto.nom}}" alt="{{selectedPhoto.nom}}">
+      <a *ngIf="listPhoto.indexOf(selectedPhoto) < (listPhoto.length -1)" role="button" class="chevron right" (click)="goSuivant()">
+      	<i class="material-icons">chevron_right</i>
+      </a>
+   </div>
+   <div class="modal-footer">
+      <a href="/documents/{{selectedPhoto.nom}}" download>Télécharger</a>
+   </div>
 </ng-template>
 
