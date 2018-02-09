@@ -1,10 +1,6 @@
-<!-- <p> -->
-<!--   acceuil works! -->
-<!--   <a routerLink="/photo/test" class="navbar-brand"> -->
-<!-- 		ALBUM -->
-<!-- 	</a> -->
-<!-- </p> -->
 <div class="container">
+	<h2>Bienvenue</h2>
+	<p>Voici la liste des album</p>
    <div class="row">
       <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngFor="let album of listAlbum">
          <div class="card" routerLink="/photo/{{album.nom}}">

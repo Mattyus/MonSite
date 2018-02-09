@@ -1,2 +1,122 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
+
+/* CARD */
+.card{
+	margin-bottom: 10px;
+  	-webkit-transition:  box-shadow .2s ease-out;
+     box-shadow: .8px .9px 3px grey;
+}
+
+.card:hover{
+	box-shadow: 1px 8px 20px grey;
+    -webkit-transition:  box-shadow .2s ease-in;
+}
+
+
+.card-title {
+    font-size: 1.5rem;
+}
+
+a .material-icons{
+	vertical-align: bottom;
+	font-size: 2.1rem;
+}
+
+.card-img-top{
+	cursor:pointer;
+	height: 250px;
+}
+
+.badge-pill {
+    margin: 1px;
+}
+
+/* MODAL */
+.modal-body {
+    padding: 0;
+}
+
+.card-img{
+	border-radius: 0;
+}
+
+.modal-footer a{
+	margin: auto;
+}
+
+.chevron{
+	height: 100%;
+	width : 35px;
+	position: absolute;
+	cursor: pointer;
+	
+}
+
+.chevron i{	
+     position: absolute;
+	top: 50%;
+	
+}
+
+.chevron.right:hover{
+	opacity: .9;
+	color: white !important;
+	background-image: -webkit-linear-gradient(left,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+	background-image: -o-linear-gradient(left,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+	background-image: -webkit-gradient(linear,left top,right top,from(rgba(0,0,0,.0001)),to(rgba(0,0,0,.5)));
+	background-image: linear-gradient(to right,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+}
+
+.chevron.left:hover{
+	opacity: .9;
+	color: white !important;
+	background-image: -webkit-linear-gradient(right,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+	background-image: -o-linear-gradient(right,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+	background-image: -webkit-gradient(linear,right top,right top,from(rgba(0,0,0,.0001)),to(rgba(0,0,0,.5)));
+	background-image: linear-gradient(to left,rgba(0,0,0,.0001) 0,rgba(0,0,0,.5) 100%);
+}
+
+.chevron.right, .chevron.right i{
+	right: 0;
+}
+
+.chevron.left, .chevron.left i{
+	left: 0;
+}
+
+.add{
+	display: flex;
+	height : 400px;
+	border: 3px dotted #007bff;
+	color: #007bff;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	min-width: 0;
+	word-wrap: break-word;
+	background-color: #fff;
+	background-clip: border-box;
+	border-radius: 0.25rem;
+	cursor: pointer;
+}
+
+.add p {
+	text-align: center;
+	margin: auto;
+	font-size: 30px;
+}
+
+.add i{
+	border: 3px dotted #007bff;
+	border-radius: 50px;
+	font-size: 80px;
+	margin: auto;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    padding: 0 2rem;
+}

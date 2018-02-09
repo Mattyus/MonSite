@@ -11,8 +11,8 @@ export class PhotoService {
 
   constructor() { }
 
-    getPhotos(): Observable<Photo[]> {
-      return of(PHOTO);
+  getPhotos(album: string): Observable<Photo[]> {
+    return of(PHOTO.filter((photo: Photo) => photo.album.toUpperCase() === album.toUpperCase()));
   }
 
 }

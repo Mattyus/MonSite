@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute } from '@angular/router';
+import { FileUploader } from 'ng2-file-upload';
 
 import { Photo } from '../model/photo';
 import { PhotoService } from '../services/photo.service';
@@ -10,8 +12,8 @@ import { PhotoService } from '../services/photo.service';
   styleUrls: ['./photo.component.css']
 })
 export class PhotoComponent implements OnInit {
-  @Input() album: string;
 
+  album: string;
   listPhoto: Photo[];
   selectedPhoto: Photo;
 
@@ -22,12 +24,19 @@ export class PhotoComponent implements OnInit {
   listAffiche: any[]; // liste des elements
   collectionSize: number; // taille de la liste
 
-  constructor(private modalService: NgbModal, private photoService: PhotoService) {
+  // Upload
+  uploader: FileUploader = new FileUploader({url: 'http://localhost:8080/upload'});
+  titreUpload: string;
+
+  constructor(
+    private route: ActivatedRoute,
+    private modalService: NgbModal,
+    private photoService: PhotoService) {
   }
 
   ngOnInit() {
-    this.getPhotos();
-
+    this.album = this.route.snapshot.paramMap.get('album');
+    this.getPhotos(this.album);
     this.page = 1; // 1er page
     this.pageSizeSelect = [5, 10, 20]; // valeur select page size
     this.pageSize = this.pageSizeSelect[0]; // nombre d'element par page
@@ -35,8 +44,8 @@ export class PhotoComponent implements OnInit {
     this.pageChange();
   }
 
-  getPhotos(): void {
-        this.photoService.getPhotos()
+  getPhotos(album: string): void {
+        this.photoService.getPhotos(album)
         .subscribe(listPhoto => this.listPhoto = listPhoto);
   }
 
@@ -49,8 +58,12 @@ export class PhotoComponent implements OnInit {
     this.pageChange();
   }
 
-  open(content, photo) {
+  openVisu(content, photo) {
     this.selectedPhoto = photo;
+    this.modalService.open(content);
+  }
+
+  openAjout(content) {
     this.modalService.open(content);
   }
 
@@ -61,6 +74,8 @@ export class PhotoComponent implements OnInit {
    goSuivant() {
     this.selectedPhoto = this.listPhoto[this.listPhoto.indexOf(this.selectedPhoto) + 1 ];
    }
+
+  onSubmit() {}
 
 }
 
