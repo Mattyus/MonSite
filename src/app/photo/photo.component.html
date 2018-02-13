@@ -1,88 +1,86 @@
 <div class="container">
-   <h2>{{album}}</h2>
-   <div class="row">
-      <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngFor="let photo of listAffiche">
-         <div class="card">
-            <img class="card-img-top" src="/documents/{{photo.nom}}" alt="{{photo.nom}}" (click)="openVisu(modalVisu, photo)">
-            <div class="card-body">
-               <p class="card-text">
-                  <span class="card-title">{{photo.titre}}</span>
-                  <a href="/documents/{{photo.nom}}" download>
-                  	<i class="material-icons">cloud_download</i>
-                  </a>  
-               </p>
-               <p class="card-text">
-                  <span *ngFor="let tag of photo.tags" class="badge badge-pill badge-primary">{{tag}}</span>
-               </p>
-               <p class="card-text text-right">
-                  <small class="text-muted">{{photo.date | date:'dd/MM/yyyy'}}</small>
-               </p>
-            </div>
-         </div>
-      </div>
-      <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
-      	<div class="add" (click)="openAjout(modalAjout)">
-      		<p>Ajouter une photo</p>
-      		<p>
-   				<i class="material-icons">add</i>
-   			</p>
-      	</div>
-      </div>
-   </div>
-   <div *ngIf="listPhoto.length > pageSize" class="row">
-      <ngb-pagination class="col" [(collectionSize)]="listPhoto.length" [(page)]="page" [(pageSize)]="pageSize" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
-      <select class="custom-select col-2 col-sm-2 col-md-1 col-lg-1 col-xl-1" id="select" (change)="onChangeSelect($event.target.value)">
-         <option *ngFor="let val of pageSizeSelect" value="{{val}}">{{val}}</option>
-      </select>
-   </div>
+	<h2>{{album}}</h2>
+	<div class="row">
+		<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngFor="let photo of listAffiche">
+			<div class="card">
+				<img class="card-img-top" src="http://localhost:8080/download/{{photo.nom}}" alt="{{photo.nom}}" (click)="openVisu(modalVisu, photo)">
+				<div class="card-body">
+					<p class="card-text">
+						<span class="card-title">{{photo.titre}}</span>
+						<a href="http://localhost:8080/download/{{photo.nom}}" download>
+							<i class="material-icons">cloud_download</i>
+						</a>  
+					</p>
+					<p class="card-text">
+						<span *ngFor="let tag of photo.tags" class="badge badge-pill badge-primary">{{tag}}</span>
+					</p>
+					<p class="card-text text-right">
+						<small class="text-muted">{{photo.date | date:'dd/MM/yyyy'}}</small>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
+			<div class="add" (click)="openAjout(modalAjout)">
+				<p>Ajouter une photo</p>
+				<p>
+					<i class="material-icons">add</i>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div *ngIf="listPhoto.length > pageSize" class="row">
+		<ngb-pagination class="col" [(collectionSize)]="listPhoto.length" [(page)]="page" [(pageSize)]="pageSize" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
+		<select class="custom-select col-2 col-sm-2 col-md-1 col-lg-1 col-xl-1" id="select" (change)="onChangeSelect($event.target.value)">
+			<option *ngFor="let val of pageSizeSelect" value="{{val}}">{{val}}</option>
+		</select>
+	</div>
 </div>
 <ng-template #modalVisu let-c="close" let-d="dismiss">
-   <div class="modal-header">
-      <h4 class="modal-title">{{selectedPhoto.titre}}</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-      	<span aria-hidden="true">&times;</span>
-      </button>
-   </div>
-   <div class="modal-body">
-      <a *ngIf="listPhoto.indexOf(selectedPhoto) > 0" role="button" class="chevron left" (click)="goPrecedent()">
-      	<i class="material-icons">chevron_left</i>
-      </a>
-      <img class="card-img" src="/documents/{{selectedPhoto.nom}}" alt="{{selectedPhoto.nom}}">
-      <a *ngIf="listPhoto.indexOf(selectedPhoto) < (listPhoto.length -1)" role="button" class="chevron right" (click)="goSuivant()">
-      	<i class="material-icons">chevron_right</i>
-      </a>
-   </div>
-   <div class="modal-footer">
-      <a href="/documents/{{selectedPhoto.nom}}" download>Télécharger</a>
-   </div>
-</ng-template>
-<ng-template #modalAjout let-c="close" let-d="dismiss">
-	<form #photoForm="ngForm" (ngSubmit)="onSubmit()">
 	<div class="modal-header">
-		<h4 class="modal-title">Ajouter une photo</h4>
+		<h4 class="modal-title">{{selectedPhoto.titre}}</h4>
 		<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
 	<div class="modal-body">
-		
-			<div class="form-group">
-	        	<label for="titre">Titre</label>
-	        	<input type="text" class="form-control" id="titre" name="titre" [(ngModel)]="titreUpload" #titre="ngModel" required>
-	        	<div [hidden]="titre.valid || titre.pristine" class="alert alert-danger">Le titre est obligatoire</div>
-	      	</div>
-	    
-			<div class="form-group">
-				<label for="name">Photo</label>
-				<input type="file" class="form-control" name="nom" ng2FileSelect [uploader]="uploader" />                                  
-			</div>
-		
+		<a *ngIf="listPhoto.indexOf(selectedPhoto) > 0" role="button" class="chevron left" (click)="goPrecedent()">
+			<i class="material-icons">chevron_left</i>
+		</a>
+		<img class="card-img" src="/documents/{{selectedPhoto.nom}}" alt="{{selectedPhoto.nom}}">
+		<a *ngIf="listPhoto.indexOf(selectedPhoto) < (listPhoto.length -1)" role="button" class="chevron right" (click)="goSuivant()">
+			<i class="material-icons">chevron_right</i>
+		</a>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-success btn-s" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
-			Télécharger
-		</button>
+		<a href="/documents/{{selectedPhoto.nom}}" download>Télécharger</a>
 	</div>
+</ng-template>
+<ng-template #modalAjout let-c="close" let-d="dismiss">
+	<form #photoForm="ngForm" (ngSubmit)="c('Close click')">
+		<div class="modal-header">
+			<h4 class="modal-title">Ajouter une photo</h4>
+			<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="form-group">
+				<label for="titre">Titre</label>
+				<input type="text" class="form-control" id="titre" name="titre" [(ngModel)]="titreUpload" #titre="ngModel" required>
+				<div [hidden]="titre.valid || titre.pristine" class="alert alert-danger">Le titre est obligatoire</div>
+			</div>
+			<div class="form-group">
+				<label for="name">Photo</label>
+				<input type="file" class="form-control" name="nom" ng2FileSelect [uploader]="uploader" (onCompleteItem)="onCompleteItem"/>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" (click)="c('Close click')">Annuler</button>
+			<button type="submit" class="btn btn-success btn-s" [disabled]="!uploader.getNotUploadedItems().length || !(titre.valid || titre.pristine)" (click)="uploader.uploadAll()">
+				Télécharger
+			</button>
+		</div>
 	</form>
 </ng-template>
 

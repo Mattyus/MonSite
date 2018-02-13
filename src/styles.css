@@ -120,3 +120,7 @@ a .material-icons{
     margin-bottom: 1rem;
     padding: 0 2rem;
 }
+
+.btn-success.disabled, .btn-success:disabled {
+    cursor: not-allowed;
+}
