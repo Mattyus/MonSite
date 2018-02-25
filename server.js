@@ -17,11 +17,11 @@ var db = mongo.connect("mongodb://localhost:27017/monSite", function(err, db){
 var Schema = mongo.Schema;
 
 var PhotoSchema = new Schema({
-	//_id: { type: String },
+	_id: { type: String },
 	album: { type: String },
 	titre: { type: String },
 	nom: { type: String },
-	tags: { type: [String] },
+	tags: [{ display: {type: String}, value: {type: String} }],
 	date: { type: Date },
 	utilisateur: { type: String }
 },{ versionKey: false });
@@ -97,6 +97,7 @@ app.get('/api/photo/:album', function(req, res) {
 /** API chemin pour rajouter une photo */
 app.post('/api/photo', function(req, res) {
 	var photo = new photoModel(req.body);
+	photo._id = new mongo.mongo.ObjectId();
 	photo.save(function(err,data){
 		if(err){  
 			res.send(err);
@@ -111,7 +112,7 @@ app.post('/api/photo', function(req, res) {
 
 /** API chemin pour supprimer une photo */
 app.del('/api/photo/:id', function(req,res){
-	Photo.remove({_id: req.params.id}, function(err,data){
+	photoModel.remove({_id: req.params.id}, function(err,data){
 		if (err){
 			res.send(err);
 			console_log('[ERROR] DELETE photo : ' + err);
@@ -125,7 +126,7 @@ app.del('/api/photo/:id', function(req,res){
 
 /** API chemin pour modifier une photo */
 app.put('/api/photo/:id', function(req,res){
-	photo.findOneAndUpdate({_id:req.params.id}, req.body, function(err,data){
+	photoModel.findOneAndUpdate({_id:req.params.id}, req.body, function(err,data){
 		if(err){
 			res.send(err);
 			console_log('[ERROR] PUT photo : ' + err);

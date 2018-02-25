@@ -1,0 +1,1 @@
+C:/MongoDB/bin/mongod --dbpath C:/mongoDB/data/db --port 27017

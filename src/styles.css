@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
 
+body {
+	background: rgba(0, 0, 0, 0) linear-gradient(90deg, rgb(237, 237, 237) 20.5625%, rgb(249, 237, 255) 80.5625%) repeat scroll 0% 0%
+}
+
 /* CARD */
 .card{
 	margin-bottom: 10px;

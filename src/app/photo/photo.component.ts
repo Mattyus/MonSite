@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbActiveModal, NgbDatepickerI18n, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 
 import { Photo } from '../model/photo';
+import { CustomDatepickerI18n } from '../datepicker/customdatepickeri18n.service';
+import { I18nService } from '../datepicker/i18n.service';
+import { NgbDateNativeAdapter } from '../datepicker/ngbdatenativeadapter.service';
 import { PhotoService } from '../services/photo.service';
 
 @Component({
   selector: 'app-photo',
   templateUrl: './photo.component.html',
-  styleUrls: ['./photo.component.css']
+  styleUrls: ['./photo.component.css'],
 })
 export class PhotoComponent implements OnInit {
 
@@ -25,9 +28,8 @@ export class PhotoComponent implements OnInit {
   collectionSize: number; // taille de la liste
 
   // Upload
-  uploader: FileUploader = new FileUploader({url: 'http://localhost:8080/upload'});
   newPhoto: Photo;
-  titreUpload: string;
+  uploader: FileUploader = new FileUploader({url: 'http://localhost:8080/upload'});
 
   constructor(
     private route: ActivatedRoute,
@@ -48,6 +50,9 @@ export class PhotoComponent implements OnInit {
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
       this.addPhoto(response);
     };
+
+    this.newPhoto = new Photo();
+
   }
 
   getPhotos(album: string): void {
@@ -70,7 +75,7 @@ export class PhotoComponent implements OnInit {
     this.modalService.open(content);
   }
 
-  openAjout(content): void {
+  openModal(content): void {
     this.modalService.open(content);
   }
 
@@ -83,14 +88,28 @@ export class PhotoComponent implements OnInit {
    }
 
   addPhoto(nom: string): void {
-    this.newPhoto = new Photo();
     this.newPhoto.nom = nom;
     this.newPhoto.album = this.album;
-    this.newPhoto.titre = this.titreUpload.trim();
-    this.newPhoto.date = new Date();
     this.newPhoto.utilisateur = 'Mathieu Sallardon';
 
+    if (this.newPhoto.date == null) {
+      this.newPhoto.date = new Date();
+    }
+
     this.photoService.addPhoto( this.newPhoto ).subscribe(() => this.getPhotos(this.album));
+
+    this.newPhoto = new Photo();
+  }
+
+  delPhoto(photo: Photo) {
+    this.photoService.delPhoto( photo ).subscribe(() => this.getPhotos(this.album));
+  }
+
+  modifPhoto () {
+    if (this.selectedPhoto.date == null) {
+      this.selectedPhoto.date = new Date();
+    }
+    this.photoService.modifPhoto(this.selectedPhoto).subscribe(() => this.getPhotos(this.album));
   }
 
 }

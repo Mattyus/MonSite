@@ -1,5 +1,6 @@
 .navbar {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
+	background: rgba(0, 0, 0, 0) linear-gradient(65.0287deg, rgb(247, 116, 140) 8.22917%, rgb(245, 115, 140) 8.22917%, rgb(0, 72, 255) 97.8125%) repeat scroll 0% 0%;
 }
 
 h1 {

@@ -20,9 +20,11 @@ export class PhotoService {
   constructor( private http: HttpClient ) { }
 
   getPhotos(album: string): Observable<Photo[]> {
-    const url = '${this.url}${album}';
-    return this.http.get<Photo[]>(url).pipe(
-      tap(_ => console.log(`GET album = ${album}`)));
+    const url = `${this.url}${album}`;
+    return this.http.get<Photo[]>(url)
+      .pipe(
+          map(this.parseDate),
+          tap(_ => console.log(`GET album = ${album}`)));
   }
 
   addPhoto (photo: Photo): Observable<Photo> {
@@ -31,15 +33,24 @@ export class PhotoService {
   }
 
   delPhoto (photo: Photo): Observable<Photo> {
-    const url = '${this.url}${photo._id}';
+    const url = `${this.url}${photo._id}`;
     return this.http.delete<Photo>(url).pipe(
       tap(_ => console.log(`DELETE photo = ${JSON.stringify(photo)}`)));
   }
 
   modifPhoto (photo: Photo): Observable<Photo> {
-    const url = '${this.url}${photo._id}';
-    return this.http.put<Photo>(this.url, photo).pipe(
+    const url = `${this.url}${photo._id}`;
+    return this.http.put<Photo>(url, photo).pipe(
       tap(_ => console.log(`PUT photo = ${JSON.stringify(photo)}`)));
   }
+    
+  private parseDate(res: Photo[]) {
+    var data = res || [];
+    data.forEach((d) => {
+      d.date = new Date(d.date);
+    });
+  return data;
+}
+
 
 }

@@ -3,7 +3,7 @@ export class Photo {
     album: string;
     titre: string;
     nom: string;
-    tags: string[];
+    tags: [{ display: string; value: string }];
     date: Date;
     utilisateur: string;
 }
