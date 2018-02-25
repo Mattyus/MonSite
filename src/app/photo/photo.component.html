@@ -1,5 +1,4 @@
 <div class="container">
-	<h2>{{album}}</h2>
 	<div class="row">
 		<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngFor="let photo of listAffiche">
 			<div class="card">
@@ -84,7 +83,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="tagsAjout">Titre</label>
+				<label for="tagsAjout">Tags</label>
 				<tag-input class="form-control" id="tagsAjout" name="tagsAjout" [(ngModel)]='newPhoto.tags' theme='bootstrap'></tag-input>
 			</div>
 			<div class="form-group">
@@ -95,7 +94,7 @@
 		<div class="modal-footer">
 			<button type="button" class="btn btn-outline-secondary" (click)="c('Close click')">Annuler</button>
 			<button type="submit" class="btn btn-outline-success btn-s" [disabled]="!uploader.getNotUploadedItems().length || !(titreAjout.valid || titreAjout.pristine)" (click)="uploader.uploadAll();c('Close click')">
-				Télécharger
+				Ajouter
 			</button>
 		</div>
 	</form>
@@ -126,13 +125,13 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="tagsModif">Titre</label>
+				<label for="tagsModif">Tags</label>
 				<tag-input class="form-control" id="tagsModif" name="tagsModif" [(ngModel)]='selectedPhoto.tags' theme='bootstrap'></tag-input>
 			</div>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-outline-secondary" (click)="c('Close click')">Annuler</button>
-			<button type="submit" class="btn btn-outline-success btn-s" [disabled]="!(titreModif.valid || titreModif.pristine)" (click)="modifPhoto ();c('Close click')">
+			<button type="submit" class="btn btn-outline-success btn-s" [disabled]="!(titreModif.valid || titreModif.pristine)" (click)="modifPhoto();c('Close click')">
 				Modifier
 			</button>
 		</div>

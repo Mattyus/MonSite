@@ -1,6 +1,6 @@
 export class Album {
-    _id: String;
-    nom: string;
+    _id: string;
+    titre: string;
     photo: string;
     description: string;
 }

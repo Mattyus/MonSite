@@ -6,11 +6,6 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Photo } from '../model/photo';
-import { PHOTO } from '../model/mock-photo';
-
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 
 @Injectable()
 export class PhotoService {
@@ -25,6 +20,14 @@ export class PhotoService {
       .pipe(
           map(this.parseDate),
           tap(_ => console.log(`GET album = ${album}`)));
+  }
+
+  private parseDate(res: Photo[]) {
+    var data = res || [];
+    data.forEach((d) => {
+      d.date = new Date(d.date);
+    });
+    return data;
   }
 
   addPhoto (photo: Photo): Observable<Photo> {
@@ -44,13 +47,24 @@ export class PhotoService {
       tap(_ => console.log(`PUT photo = ${JSON.stringify(photo)}`)));
   }
     
-  private parseDate(res: Photo[]) {
+  delFile (file: string): Observable<Photo> {
+    const url = `http://localhost:8080/delete/${file}`;
+    return this.http.delete<Photo>(url).pipe(
+      tap(_ => console.log(`DELETE FILE = ${file}`)));
+  }
+    
+  delFileAlbum (album: string): void {
+    this.getPhotos(album).subscribe(
+      res => this.deleteAlbumFile(res)
+    );
+  }
+
+  private deleteAlbumFile(res: Photo[]){
     var data = res || [];
     data.forEach((d) => {
-      d.date = new Date(d.date);
+      this.delFile(d.nom).subscribe();
     });
-  return data;
-}
+  }
 
 
 }

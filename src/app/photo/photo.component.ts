@@ -103,6 +103,7 @@ export class PhotoComponent implements OnInit {
 
   delPhoto(photo: Photo) {
     this.photoService.delPhoto( photo ).subscribe(() => this.getPhotos(this.album));
+    this.photoService.delFile( photo.nom ).subscribe();
   }
 
   modifPhoto () {

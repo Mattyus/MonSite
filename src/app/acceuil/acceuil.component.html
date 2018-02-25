@@ -1,19 +1,93 @@
 <div class="container">
 	<h2>Bienvenue</h2>
 	<p>Voici la liste des album</p>
-   <div class="row">
-      <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngFor="let album of listAlbum">
-         <div class="card" routerLink="/photo/{{album.nom}}">
-            <img class="card-img-top" src="/documents/{{album.photo}}" alt="{{album.photo}}">
-            <div class="card-body">
-               <p class="card-text">
-                  <span class="card-title">{{album.nom}}</span> 
-               </p>
-               <p class="card-text">
-                  <small class="text-muted">{{album.description}}</small>
-               </p>
-            </div>
-         </div>
-      </div>
-   </div>
+	<div class="row">
+		<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngFor="let album of listAffiche">
+			<div class="card">
+				<img class="card-img-top" src="/documents/{{album.photo}}" alt="{{album.photo}}" routerLink="/photo/{{album._id}}">
+				<div class="card-body">
+					<p class="card-text">
+						<span class="card-title">{{album.titre}}</span>
+						<i class="material-icons modif" (click)="openModalModif(modalModif,album)">mode_edit</i>
+					</p>
+					<p class="card-text">
+						<small class="text-muted">{{album.description}}</small>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
+			<div class="add" (click)="openModalAjout(modalAjout)">
+				<p>Ajouter un album</p>
+				<p>
+					<i class="material-icons">add</i>
+				</p>
+			</div>
+		</div>
+		<div *ngIf="listAlbum.length > pageSize" class="row">
+			<ngb-pagination class="col" [(collectionSize)]="listAlbum.length" [(page)]="page" [(pageSize)]="pageSize" [boundaryLinks]="true" (pageChange)="pageChange($event)"></ngb-pagination>
+			<select class="custom-select col-2 col-sm-2 col-md-1 col-lg-1 col-xl-1" id="select" (change)="onChangeSelect($event.target.value)">
+				<option *ngFor="let val of pageSizeSelect" value="{{val}}">{{val}}</option>
+			</select>
+		</div>
+	</div>
 </div>
+<ng-template #modalAjout let-c="close" let-d="dismiss">
+	<form #photoForm="ngForm">
+		<div class="modal-header">
+			<h4 class="modal-title">Ajouter un album</h4>
+			<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="form-group">
+				<label for="titreAjout">Titre</label>
+				<input type="text" class="form-control" id="titreAjout" name="titreAjout" [(ngModel)]="newAlbum.titre" #titreAjout="ngModel" required>
+				<div [hidden]="titreAjout.valid || titreAjout.pristine" class="alert alert-danger">Le titre est obligatoire</div>
+			</div>
+			<div class="form-group">
+				<label for="desciptionAjout">Desciption</label>
+				<textarea type="text" class="form-control" id="desciptionAjout" name="desciptionAjout" [(ngModel)]="newAlbum.description"></textarea>
+			</div>
+			<div class="form-group">
+				<label for="photoAjout">Photo</label>
+				<input type="file" class="form-control" id="photoAjout" name="photoAjout" ng2FileSelect [uploader]="uploader"/>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-outline-secondary" (click)="c('Close click')">Annuler</button>
+			<button type="submit" class="btn btn-outline-success btn-s" [disabled]="!uploader.getNotUploadedItems().length || !(titreAjout.valid || titreAjout.pristine)" (click)="uploader.uploadAll();c('Close click')">
+				Ajouter
+			</button>
+		</div>
+	</form>
+</ng-template>
+<ng-template #modalModif let-c="close" let-d="dismiss">
+	<form #photoForm="ngForm">
+		<div class="modal-header">
+			<h4 class="modal-title">Modification de l'album</h4>
+			<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="form-group">
+				<label for="titreModif">Titre</label>
+				<input type="text" class="form-control" id="titreModif" name="titreModif" [(ngModel)]="selectedAlbum.titre" #titreModif="ngModel" required>
+				<div [hidden]="titreModif.valid || titreModif.pristine" class="alert alert-danger">Le titre est obligatoire</div>
+			</div>
+			<div class="form-group">
+				<label for="desciptionModif">Desciption</label>
+				<textarea type="text" class="form-control" id="desciptionModif" name="desciptionModif" [(ngModel)]="selectedAlbum.description"></textarea>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-outline-secondary" (click)="c('Close click')">Annuler</button>
+			<button type="button" class="btn btn-outline-danger" (click)="delAlbum(selectedAlbum);c('Close click')">Supprimer</button>
+			<button type="submit" class="btn btn-outline-success btn-s" [disabled]="!(titreModif.valid || titreModif.pristine)" (click)="modifAlbum();c('Close click')">
+				Modifier
+			</button>
+		</div>
+	</form>
+</ng-template>
