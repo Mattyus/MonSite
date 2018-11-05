@@ -1,10 +1,43 @@
 .navbar {
 	margin-bottom: 20px;
 	background: rgba(0, 0, 0, 0) linear-gradient(65.0287deg, rgb(247, 116, 140) 8.22917%, rgb(245, 115, 140) 8.22917%, rgb(0, 72, 255) 97.8125%) repeat scroll 0% 0%;
+	color:#fff;
 }
 
 h1 {
 	margin: auto;
-	color:#fff;
 	font-family: Brush Script MT, Brush Script Std, cursive;
+}
+
+p{
+	margin: 0;
+	font-size: 17px;
+}
+
+p a{
+	color: rgb(245, 115, 140);
+	cursor: pointer;
+}
+
+p a:hover{	
+	text-decoration: underline;
+}
+
+.dropdown-button{
+	color: white;
+	border: none;
+}
+
+.dropdown-login{
+	right: 1rem;
+	left: auto !important;
+}
+
+.dropdown-menu a{
+	color: #007bff;
+	cursor: pointer;
+}
+
+.dropdown-menu a:hover{
+	text-decoration: underline;
 }

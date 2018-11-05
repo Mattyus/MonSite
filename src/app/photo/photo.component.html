@@ -5,7 +5,7 @@
 				<img class="card-img-top" src="http://localhost:8080/download/{{photo.nom}}" alt="{{photo.nom}}" (click)="openVisu(modalVisu, photo)">
 				<div class="card-body">
 					<p class="card-text">
-						<span class="card-title">{{photo.titre}}</span>
+						<span class="card-title">{{photo.titre}}</span>&nbsp;
 						<a href="http://localhost:8080/download/{{photo.nom}}" download>
 							<i class="material-icons">cloud_download</i>
 						</a>  
@@ -19,7 +19,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
+		<div *ngIf="isLogged" class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
 			<div class="add" (click)="openModal(modalAjout)">
 				<p>Ajouter une photo</p>
 				<p>
@@ -52,8 +52,8 @@
 		</a>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-danger" (click)="delPhoto(selectedPhoto);c('Close click')">Supprimer</button>
-		<button type="button" class="btn btn-outline-primary" (click)="c('Close click');openModal(modalModif)">Modification</button>
+		<button *ngIf="isLogged" type="button" class="btn btn-outline-danger" (click)="delPhoto(selectedPhoto);c('Close click')">Supprimer</button>
+		<button *ngIf="isLogged" type="button" class="btn btn-outline-primary" (click)="c('Close click');openModal(modalModif)">Modification</button>
 		<a type="button" class="btn btn-outline-primary" href="http://localhost:8080/download/{{selectedPhoto.nom}}" download>Télécharger</a>
 	</div>
 </ng-template>

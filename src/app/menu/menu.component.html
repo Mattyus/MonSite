@@ -1,7 +1,73 @@
-<nav class="navbar navbar-dark bg-primary">
-	<a routerLink="/acceuil" class="navbar-brand">
-		<i class="material-icons">home</i>
-	</a>
-	<h1>{{titre}}</h1>
-</nav>
+<div ngbDropdown #loginDrop="ngbDropdown">
+	<nav class="navbar navbar-dark bg-primary">
+		<a routerLink="/acceuil" class="navbar-brand">
+			<i class="material-icons">home</i>
+		</a>
+		<h1>Mon Site</h1>
+		<p *ngIf="isLogged">Bonjour <strong>{{user.login}}</strong> (<a (click)="logout(); loginDrop.close();">se déconnecter</a>)</p>
+		<div *ngIf="!isLogged" class="nav navbar-nav navbar-right">
+			<div class="dropdown" >
+				<button class="btn btn-outline-primary dropdown-button" id="login" ngbDropdownToggle>
+					<i class="material-icons">account_circle</i>
+				</button>
+				
+			</div>
+		</div>
+	</nav>
+	<div *ngIf="!isLogged" ngbDropdownMenu aria-labelledby="login" class="dropdown-login">
+		<div class="row">
+			<div class="col-md-12">
+				 <form [formGroup]="loginForm" (ngSubmit)="auth()">
+				 		
+						<div class="form-group">
+							 <label class="sr-only" for="login">Identifiant</label>
+							 <input type="text" class="form-control" id="login" placeholder="Identifiant" formControlName="login">
+						</div>
+						<div class="form-group">
+							<label class="sr-only" for="password">Mot de passe</label>
+							<input type="password" class="form-control" id="password" placeholder="Mot de passe" formControlName="password">
+						</div>
+						<div class="form-group">
+							<ngb-alert [type]="'danger'" *ngIf="loginError != null && loginError != ''" (close)="loginError=''">{{loginError}}</ngb-alert>
+							<button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+						</div>
+				 </form>
+			</div>
+			<div class="col-md-12 bottom text-center">
+				<span>Nouveau ?</span>&nbsp;
+				<a (click)="$event.stopPropagation(); loginDrop.close(); openModal(modalRegister)"><b>S'enregistrer</b></a>
+			</div>
+		 </div>
+	</div>
+</div>
+<ng-template #modalRegister let-c="close" let-d="dismiss">
+	<form [formGroup]="registerForm"  (ngSubmit)="register()">
+		<div class="modal-header">
+			<h4 class="modal-title">Qui es-tu ?</h4>
+			<button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div class="form-group">
+				<label for="newLogin">Identifiant</label>
+				<input type="text" class="form-control" id="newLogin" name="newLogin" formControlName="newLogin">
+				<div *ngIf="newLogin.invalid && (newLogin.dirty || newLogin.touched)" class="alert alert-danger">
+					<div *ngIf="newLogin.errors.required">L'identifiant est obligatoire</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="newPassword">Mot de passe</label>
+				<input type="password" class="form-control" id="newPassword" name="newPassword" formControlName="newPassword">
+				<div *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched)" class="alert alert-danger">
+					<div *ngIf="newPassword.errors.required">Le mot de passe est obligatoire</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-outline-secondary" (click)="c('Close click')">Annuler</button>
+			<button type="submit" class="btn btn-outline-success btn-s">Valider</button>
+		</div>
+	</form>
+</ng-template>
 

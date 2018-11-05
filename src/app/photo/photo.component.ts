@@ -8,6 +8,7 @@ import { CustomDatepickerI18n } from '../datepicker/customdatepickeri18n.service
 import { I18nService } from '../datepicker/i18n.service';
 import { NgbDateNativeAdapter } from '../datepicker/ngbdatenativeadapter.service';
 import { PhotoService } from '../services/photo.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-photo',
@@ -34,8 +35,8 @@ export class PhotoComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private modalService: NgbModal,
-    private photoService: PhotoService) {
-  }
+    private photoService: PhotoService,
+    private authService: AuthService) {}
 
   ngOnInit() {
     this.album = this.route.snapshot.paramMap.get('album');
@@ -111,6 +112,10 @@ export class PhotoComponent implements OnInit {
       this.selectedPhoto.date = new Date();
     }
     this.photoService.modifPhoto(this.selectedPhoto).subscribe(() => this.getPhotos(this.album));
+  }
+
+  get isLogged(): boolean {
+    return this.authService.getIsLoggedIn();
   }
 
 }

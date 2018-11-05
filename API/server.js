@@ -36,6 +36,9 @@ app.listen(8080, function () {
 	console_log('App listening on port 8080!')  
 }) 
 
+/** USER */
+var user = require("./user.js")(app, mongo, console_log);
+
 /** FILE */
 var file = require("./file.js")(app, console_log);
 

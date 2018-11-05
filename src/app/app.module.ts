@@ -5,7 +5,7 @@ import { NgbModule, NgbDatepickerI18n, NgbDateAdapter, NgbDateParserFormatter } 
 import { HttpClientModule } from '@angular/common/http';
 import { FileUploadModule } from 'ng2-file-upload';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TagInputModule } from 'ngx-chips';
 
 import { AppComponent } from './app.component';
@@ -19,6 +19,8 @@ import { I18nService } from './datepicker/i18n.service';
 import { CustomDatepickerI18n } from './datepicker/customdatepickeri18n.service';
 import { NgbDateFRParserFormatter } from './datepicker/ngbdatefrparserformatter.service';
 import { NgbDateNativeAdapter } from './datepicker/ngbdatenativeadapter.service';
+import { AuthService } from './services/auth.service';
+import { AuthGuardService } from './services/auth-guard.service';
 
 TagInputModule.withDefaults({
   tagInput: {
@@ -47,9 +49,10 @@ TagInputModule.withDefaults({
     FileUploadModule,
     FormsModule,
     TagInputModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
-  providers: [ PhotoService, AlbumService, I18nService,
+  providers: [ PhotoService, AlbumService, I18nService, AuthService, AuthGuardService,
     {provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n},
     {provide: NgbDateAdapter, useClass: NgbDateNativeAdapter},
     {provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter}],

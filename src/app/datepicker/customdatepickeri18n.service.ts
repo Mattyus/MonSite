@@ -1,6 +1,6 @@
 import { I18nService } from './i18n.service';
 import { Injectable } from '@angular/core';
-import { NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerI18n, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 const I18N_VALUES = {
   'fr': {
@@ -25,5 +25,8 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
   }
   getMonthFullName(month: number): string {
     return this.getMonthShortName(month);
+  }
+  getDayAriaLabel(date: NgbDateStruct): string {
+    return `${date.day}-${date.month}-${date.year}`;
   }
 }

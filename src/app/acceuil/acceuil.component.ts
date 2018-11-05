@@ -5,6 +5,7 @@ import { FileUploader } from 'ng2-file-upload';
 import { Album } from '../model/album';
 import { AlbumService } from '../services/album.service';
 import { PhotoService } from '../services/photo.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-acceuil',
@@ -12,7 +13,7 @@ import { PhotoService } from '../services/photo.service';
   styleUrls: ['./acceuil.component.css']
 })
 export class AcceuilComponent implements OnInit {
-
+        
   listAlbum: Album[];
   selectedAlbum: Album;
 
@@ -30,7 +31,8 @@ export class AcceuilComponent implements OnInit {
   constructor(
     private albumService: AlbumService,
     private photoService: PhotoService,
-    private modalService: NgbModal) { }
+    private authService: AuthService,
+    private modalService: NgbModal) {}
 
   ngOnInit() {
     this.getAlbums();
@@ -84,6 +86,10 @@ export class AcceuilComponent implements OnInit {
     this.photoService.delFileAlbum(album._id);
     this.photoService.delFile( album.photo ).subscribe();
       
+  }
+
+  get isLogged(): boolean {
+    return this.authService.getIsLoggedIn();
   }
 
 }

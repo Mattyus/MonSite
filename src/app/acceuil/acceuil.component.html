@@ -4,11 +4,11 @@
 	<div class="row">
 		<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" *ngFor="let album of listAffiche">
 			<div class="card">
-				<img class="card-img-top" src="/documents/{{album.photo}}" alt="{{album.photo}}" routerLink="/photo/{{album._id}}">
+				<img class="card-img-top" src="http://localhost:8080/download/{{album.photo}}" alt="{{album.photo}}" routerLink="/photo/{{album._id}}">
 				<div class="card-body">
 					<p class="card-text">
 						<span class="card-title">{{album.titre}}</span>
-						<i class="material-icons modif" (click)="openModalModif(modalModif,album)">mode_edit</i>
+						<i *ngIf="isLogged" class="material-icons modif" (click)="openModalModif(modalModif,album)">mode_edit</i>
 					</p>
 					<p class="card-text">
 						<small class="text-muted">{{album.description}}</small>
@@ -16,7 +16,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
+		<div *ngIf="isLogged" class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4">
 			<div class="add" (click)="openModalAjout(modalAjout)">
 				<p>Ajouter un album</p>
 				<p>
